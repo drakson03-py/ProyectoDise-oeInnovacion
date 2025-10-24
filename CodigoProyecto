@@ -1,0 +1,48 @@
+const int trigPin = 9; 
+const int echoPin = 10; 
+const int motor = 2;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(motor,OUTPUT);
+
+}
+
+int sonidobuzz(int distanciaMayorIgual,int distanciaMenor,int dela,int distDetectada){
+
+    if(distDetectada>distanciaMenor && distDetectada <=distanciaMayorIgual){
+    delay(dela);
+    digitalWrite(motor, HIGH);
+    delay(dela);
+    digitalWrite(motor, LOW);
+    }
+    else{
+      digitalWrite(motor, LOW);
+     
+    }
+}
+
+
+void loop() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);  
+  digitalWrite(trigPin, LOW);
+
+
+  long duration = pulseIn(echoPin, HIGH);
+
+  float distance = duration * 0.034 / 2; 
+  Serial.print("Distancia: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  sonidobuzz(40,30,400,distance);
+  sonidobuzz(30,20,300,distance);
+  sonidobuzz(20,10,200,distance);
+  sonidobuzz(10,5,100,distance);
+  sonidobuzz(5,0,50,distance);
+}
