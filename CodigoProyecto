@@ -1,3 +1,7 @@
+// Transistor Colector 3.3v / Base Pin 10 / Emisor positivo Motor
+// Diodo en paralelo con el motor/ linea gris al + / contrario al negativo del motor
+
+
 const int trigPin = 9; 
 const int echoPin = 10; 
 const int motor = 2;
