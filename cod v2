@@ -1,0 +1,69 @@
+// Transistor Colector 3.3v / Base Pin 10 / Emisor positivo Motor
+// Diodo en paralelo con el motor/ linea gris al + / contrario al negativo del motor
+
+
+const int trigPin = 9; 
+const int echoPin = 10;
+
+const int trigPin2 = 11; 
+const int echoPin2 = 12;
+const int motor = 2;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  
+  pinMode(motor,OUTPUT);
+  
+  pinMode(trigPin2, OUTPUT);
+  pinMode(echoPin2, INPUT);
+
+}
+
+int sonidobuzz(int distanciaMayorIgual,int distanciaMenor,int dela,int distDetectada,int distDetectada2){
+
+    if((distDetectada>distanciaMenor && distDetectada <=distanciaMayorIgual) || (distDetectada2>distanciaMenor && distDetectada2 <=distanciaMayorIgual)) {
+    delay(dela);
+    digitalWrite(motor, HIGH);
+    delay(dela);
+    digitalWrite(motor, LOW);
+    }
+    else{
+      digitalWrite(motor, LOW);
+     
+    }
+}
+
+
+void loop() {
+  digitalWrite(trigPin, LOW);
+  digitalWrite(trigPin2, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  digitalWrite(trigPin2, HIGH);
+  delayMicroseconds(10);  
+  digitalWrite(trigPin, LOW);
+  digitalWrite(trigPin2, LOW);
+
+
+  long duration = pulseIn(echoPin, HIGH);
+  long duration2 = pulseIn(echoPin2, HIGH);
+
+  float distance = duration * 0.034 / 2;
+  float distance2 = duration2 * 0.034 / 2; 
+  
+  Serial.print("Distancia: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+  
+  Serial.print("Distancia2: ");
+  Serial.print(distance2);
+  Serial.println(" cm");
+
+  sonidobuzz(40,30,400,distance,distance2);
+  sonidobuzz(30,20,300,distance,distance2);
+  sonidobuzz(20,10,200,distance,distance2);
+  sonidobuzz(10,5,100,distance,distance2);
+  sonidobuzz(5,0,50,distance,distance2);
+}
